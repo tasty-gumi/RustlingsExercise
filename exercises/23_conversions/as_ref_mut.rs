@@ -5,20 +5,24 @@
 // Obtain the number of bytes (not characters) in the given argument
 // (`.len()` returns the number of bytes in a string).
 // TODO: Add the `AsRef` trait appropriately as a trait bound.
-fn byte_counter<T>(arg: T) -> usize {
+// 这里只是需要给类型参数加上特征
+fn byte_counter<T:AsRef<str>>(arg: T) -> usize {
     arg.as_ref().len()
 }
 
 // Obtain the number of characters (not bytes) in the given argument.
 // TODO: Add the `AsRef` trait appropriately as a trait bound.
-fn char_counter<T>(arg: T) -> usize {
+fn char_counter<T:AsRef<str>>(arg: T) -> usize {
     arg.as_ref().chars().count()
 }
 
 // Squares a number using `as_mut()`.
 // TODO: Add the appropriate trait bound.
-fn num_sq<T>(arg: &mut T) {
+fn num_sq<T:AsMut<u32>>(arg: &mut T) {
     // TODO: Implement the function body.
+    // 这个函数传递的参数类型是Box的可变引用，T=Box<u32>, 由T是实现了as_mut()的，可以直接得到box中值的可变引用
+    let boxed_num = arg.as_mut();
+    *boxed_num *= *boxed_num;
 }
 
 fn main() {
